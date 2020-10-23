@@ -1,0 +1,30 @@
+post:
+  tags:
+    - Reports
+  summary: Approve Report
+  description: |
+    This API is used to approve a particular report.
+  operationId: PostReportApprovals
+  parameters:
+    - in: path
+      name: report_id
+      description: |
+        Id of a report which is to be approved.
+      schema:
+        type: string
+        example: 'rphs782hj29'
+  responses:
+    '200':
+      description: OK
+    '401':
+      description: Unauthorised request
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/errors/401.yaml'
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/errors/403.yaml'
