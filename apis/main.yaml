@@ -18,7 +18,7 @@ components:
           authorizationUrl: 'https://accounts.fylehq.com/app/developers/#/oauth/authorize'
           tokenUrl: 'https://accounts.fylehq.com/oauth/token'
           scopes:
-            fyler.*: Grant all FYLER actions
+            approver.*: Grant all Approver actions
 
 tags:
   - name: Reports
