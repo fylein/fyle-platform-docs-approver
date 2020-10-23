@@ -8,6 +8,7 @@ post:
   parameters:
     - in: path
       name: report_id
+      required: true
       description: |
         Id of a report which is to be approved.
       schema:
