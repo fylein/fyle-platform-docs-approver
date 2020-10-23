@@ -12,7 +12,7 @@ post:
         Id of a report which is to be approved.
       schema:
         type: string
-        example: 'rphs782hj29'
+        example: 'rphs782hj245'
   responses:
     '200':
       description: OK
