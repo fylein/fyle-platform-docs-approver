@@ -1,0 +1,30 @@
+openapi: 3.0.3
+info:
+  version: '3.0'
+  title: Fyle REST API
+  contact:
+    name: Integrations
+    email: support@fyle.in
+servers:
+  - url: 'https://accounts.fylehq.com'
+    description: Live Server
+
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: 'https://accounts.fylehq.com/app/developers/#/oauth/authorize'
+          tokenUrl: 'https://accounts.fylehq.com/oauth/token'
+          scopes:
+            approver.*: Grant all Approver actions
+
+tags:
+  - name: Reports
+    description: |
+      This API gives you access to your organisation's Expense Reports data.
+
+paths:
+  /v4/approver/report_approvals/{report_id}:
+    $ref: 'paths/report_approvals.yaml'

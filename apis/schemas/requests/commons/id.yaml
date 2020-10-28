@@ -1,0 +1,8 @@
+in: query
+name: id
+schema:
+  type: string
+description:
+  Filters the objects by id. For single value use `id=eq.<value>`.
+  For multiple values, use `id=in.(value1,value2,value3)`.
+example: eq.<id>

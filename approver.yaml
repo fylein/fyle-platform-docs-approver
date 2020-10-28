@@ -1,0 +1,80 @@
+openapi: 3.0.3
+info:
+  version: '3.0'
+  title: Fyle REST API
+  contact:
+    name: Integrations
+    email: support@fyle.in
+servers:
+  - url: 'https://accounts.fylehq.com'
+    description: Live Server
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: 'https://accounts.fylehq.com/app/developers/#/oauth/authorize'
+          tokenUrl: 'https://accounts.fylehq.com/oauth/token'
+          scopes:
+            approver.*: Grant all Approver actions
+  schemas:
+    '401':
+      type: object
+      properties:
+        message:
+          enum:
+            - invalid token
+          type: string
+          description: >
+            This error means that the input access token is either not issued by
+            Fyle or has expired.
+
+            You need to generate a new access token.
+    '403':
+      type: object
+      properties:
+        message:
+          enum:
+            - Forbidden
+          type: string
+          description: >
+            This error means current user does not have enough permissions to
+            perform this operation.
+tags:
+  - name: Reports
+    description: |
+      This API gives you access to your organisation's Expense Reports data.
+paths:
+  '/v4/approver/report_approvals/{report_id}':
+    post:
+      tags:
+        - Reports
+      summary: Approve Report
+      description: |
+        This API is used to approve a particular report.
+      operationId: PostReportApprovals
+      parameters:
+        - in: path
+          name: report_id
+          required: true
+          description: |
+            Id of a report which is to be approved.
+          schema:
+            type: string
+            example: rphs782hj245
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorised request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403'

@@ -1,0 +1,9 @@
+type: object
+properties:
+  message:
+    enum:
+      - Bad Gateway
+    type: string
+    description: |
+      This error means that our server is down (yes, it happens).This is very unlikely.
+      Please contact us if you are facing this issue.
