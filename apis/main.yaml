@@ -23,8 +23,8 @@ components:
 tags:
   - name: Reports
     description: |
-      This API gives you access to your organisation's Expense Reports data.
+      These API gives you access to your organisation's expense reports data.
 
 paths:
-  /v4/approver/report_approvals/{report_id}:
+  /v4/approver/report_approvals:
     $ref: 'paths/report_approvals.yaml'

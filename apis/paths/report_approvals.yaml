@@ -1,19 +1,16 @@
 post:
   tags:
     - Reports
-  summary: Approve Report
+  summary: Approve a report
   description: |
-    This API is used to approve a particular report.
+    It moves the report to the `APPROVED` state.
   operationId: PostReportApprovals
-  parameters:
-    - in: path
-      name: report_id
-      required: true
-      description: |
-        Id of a report which is to be approved.
-      schema:
-        type: string
-        example: 'rphs782hj245'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/requests/report_approvals.yaml'
   responses:
     '200':
       description: OK
