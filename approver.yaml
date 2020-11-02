@@ -45,13 +45,45 @@ components:
       type: object
       properties:
         data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: |
-                Id of a report which is to be approved.   
-              example: rphs782hj245
+          type: array
+          items:
+            type: object
+            properties:
+              report_id:
+                type: string
+                description: |
+                  Id of a report which is to be approved.   
+                example: rphs782hj245
+      required:
+        - data
+    count:
+      description: |
+        The total number of objects that can be requested.
+      type: integer
+      example: 10000
+    post_report_approvals:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/count'
+        url:
+          type: string
+          example: /v4/common/report_approvals
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              report_id:
+                type: string
+                description: |
+                  Id of a report which is approved.   
+                example: rphs782hj245
+              status:
+                type: string
+                description: |
+                  Signifies in what state the report is.
+                example: APPROVED
       required:
         - data
 tags:
@@ -65,7 +97,7 @@ paths:
         - Reports
       summary: Approve a report
       description: |
-        It moves the report to the `APPROVED` state.
+        It approves an expense report.
       operationId: PostReportApprovals
       requestBody:
         required: true
@@ -76,6 +108,18 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    example: /v4/common/report_approvals
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/post_report_approvals'
         '401':
           description: Unauthorised request
           content:
