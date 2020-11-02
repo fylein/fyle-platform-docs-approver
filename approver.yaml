@@ -41,28 +41,38 @@ components:
           description: >
             This error means current user does not have enough permissions to
             perform this operation.
+    report_approvals:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: |
+                Id of a report which is to be approved.   
+              example: rphs782hj245
+      required:
+        - data
 tags:
   - name: Reports
     description: |
-      This API gives you access to your organisation's Expense Reports data.
+      These API gives you access to your organisation's expense reports data.
 paths:
-  '/v4/approver/report_approvals/{report_id}':
+  /v4/approver/report_approvals:
     post:
       tags:
         - Reports
-      summary: Approve Report
+      summary: Approve a report
       description: |
-        This API is used to approve a particular report.
+        It moves the report to the `APPROVED` state.
       operationId: PostReportApprovals
-      parameters:
-        - in: path
-          name: report_id
-          required: true
-          description: |
-            Id of a report which is to be approved.
-          schema:
-            type: string
-            example: rphs782hj245
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/report_approvals'
       responses:
         '200':
           description: OK
