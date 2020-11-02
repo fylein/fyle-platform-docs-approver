@@ -95,9 +95,9 @@ paths:
     post:
       tags:
         - Reports
-      summary: Approve a report
+      summary: Approve reports
       description: |
-        It approves an expense report.
+        It approve expense reports.
       operationId: PostReportApprovals
       requestBody:
         required: true
