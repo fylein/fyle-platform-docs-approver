@@ -1,9 +1,9 @@
 post:
   tags:
     - Reports
-  summary: Approve a report
+  summary: Approve reports
   description: |
-    It approves an expense report.
+    It approve expense reports.
   operationId: PostReportApprovals
   requestBody:
     required: true
@@ -21,7 +21,7 @@ post:
             properties:
               url:
                 type: string
-                example: '/v4/common/report_approvals'
+                example: '/common/report_approvals'
               data:
                 type: array
                 items:
