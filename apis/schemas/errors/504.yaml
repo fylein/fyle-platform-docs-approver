@@ -1,0 +1,9 @@
+type: object
+properties:
+  message:
+    enum:
+      - Gateway Timeout
+    type: string
+    description: |
+      This error means request took more than allowed time to complete and got terminated at api gateway.<br/>
+      Please contact us if you are facing this issue.

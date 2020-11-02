@@ -1,0 +1,23 @@
+type: object
+properties:
+  count:
+    $ref: '../commons/count.yaml'
+  url:
+    type: string
+    example: '/common/report_approvals'
+  data:
+    type: array
+    items:
+      type: object
+      properties:
+        report_id:
+          type: string
+          description: |
+            Id of a report which is approved.   
+          example: 'rphs782hj245'
+        status:
+          type: string
+          description: |
+            Signifies in what state the report is.
+          example: 'APPROVED'
+required: [ data ]

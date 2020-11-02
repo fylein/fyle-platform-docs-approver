@@ -1,0 +1,134 @@
+openapi: 3.0.3
+info:
+  version: '3.0'
+  title: Fyle REST API
+  contact:
+    name: Integrations
+    email: support@fyle.in
+servers:
+  - url: 'https://accounts.fylehq.com'
+    description: Live Server
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: 'https://accounts.fylehq.com/app/developers/#/oauth/authorize'
+          tokenUrl: 'https://accounts.fylehq.com/oauth/token'
+          scopes:
+            approver.*: Grant all Approver actions
+  schemas:
+    '401':
+      type: object
+      properties:
+        message:
+          enum:
+            - invalid token
+          type: string
+          description: >
+            This error means that the input access token is either not issued by
+            Fyle or has expired.
+
+            You need to generate a new access token.
+    '403':
+      type: object
+      properties:
+        message:
+          enum:
+            - Forbidden
+          type: string
+          description: >
+            This error means current user does not have enough permissions to
+            perform this operation.
+    report_approvals:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              report_id:
+                type: string
+                description: |
+                  Id of a report which is to be approved.   
+                example: rphs782hj245
+      required:
+        - data
+    count:
+      description: |
+        The total number of objects that can be requested.
+      type: integer
+      example: 10000
+    post_report_approvals:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/count'
+        url:
+          type: string
+          example: /common/report_approvals
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              report_id:
+                type: string
+                description: |
+                  Id of a report which is approved.   
+                example: rphs782hj245
+              status:
+                type: string
+                description: |
+                  Signifies in what state the report is.
+                example: APPROVED
+      required:
+        - data
+tags:
+  - name: Reports
+    description: |
+      These API gives you access to your organisation's expense reports data.
+paths:
+  /approver/report_approvals:
+    post:
+      tags:
+        - Reports
+      summary: Approve a report
+      description: |
+        It approves an expense report.
+      operationId: PostReportApprovals
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/report_approvals'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    example: /common/report_approvals
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/post_report_approvals'
+        '401':
+          description: Unauthorised request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403'

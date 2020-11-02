@@ -1,0 +1,8 @@
+type: object
+properties:
+  message:
+    enum:
+      - Internal server error
+    type: string
+    description: |
+      This error means that its an issue at our end. Please contact us if you are facing this issue.
