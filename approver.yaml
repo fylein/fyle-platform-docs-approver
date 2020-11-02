@@ -68,7 +68,7 @@ components:
           $ref: '#/components/schemas/count'
         url:
           type: string
-          example: /v4/common/report_approvals
+          example: /common/report_approvals
         data:
           type: array
           items:
@@ -91,7 +91,7 @@ tags:
     description: |
       These API gives you access to your organisation's expense reports data.
 paths:
-  /v4/approver/report_approvals:
+  /approver/report_approvals:
     post:
       tags:
         - Reports
@@ -115,7 +115,7 @@ paths:
                 properties:
                   url:
                     type: string
-                    example: /v4/common/report_approvals
+                    example: /common/report_approvals
                   data:
                     type: array
                     items:

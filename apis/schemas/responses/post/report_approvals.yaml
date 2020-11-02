@@ -4,7 +4,7 @@ properties:
     $ref: '../commons/count.yaml'
   url:
     type: string
-    example: '/v4/common/report_approvals'
+    example: '/common/report_approvals'
   data:
     type: array
     items:
