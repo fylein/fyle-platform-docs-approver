@@ -8,16 +8,5 @@ properties:
   data:
     type: array
     items:
-      type: object
-      properties:
-        report_id:
-          type: string
-          description: |
-            Id of a report which is approved.   
-          example: 'rphs782hj245'
-        status:
-          type: string
-          description: |
-            Signifies in what state the report is.
-          example: 'APPROVED'
+      $ref: '../../objects/reports.yaml'
 required: [ data ]

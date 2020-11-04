@@ -5,7 +5,7 @@ properties:
     items:
       type: object
       properties:
-        report_id:
+        id:
           type: string
           description: |
               Id of a report which is to be approved.   
