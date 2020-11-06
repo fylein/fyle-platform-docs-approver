@@ -1,0 +1,12 @@
+type: object
+properties:
+  count:
+    $ref: '../commons/count.yaml'
+  url:
+    type: string
+    example: '/common/report_approvals'
+  data:
+    type: array
+    items:
+      $ref: '../../objects/reports.yaml'
+required: [ data ]

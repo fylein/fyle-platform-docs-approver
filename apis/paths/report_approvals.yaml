@@ -1,9 +1,9 @@
 post:
   tags:
     - Reports
-  summary: Approve a report
+  summary: Approve reports
   description: |
-    It moves the report to the `APPROVED` state.
+    It approve expense reports.
   operationId: PostReportApprovals
   requestBody:
     required: true
@@ -14,6 +14,18 @@ post:
   responses:
     '200':
       description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              url:
+                type: string
+                example: '/common/report_approvals'
+              data:
+                type: array
+                items:
+                  $ref: '../schemas/responses/post/report_approvals.yaml'
     '401':
       description: Unauthorised request
       content:
