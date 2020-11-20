@@ -2,7 +2,7 @@
   "items": [
     {
       "type": "item",
-      "title": "Fyle REST API",
+      "title": "Approver APIs",
       "uri": "approver.yaml"
     }
   ]
