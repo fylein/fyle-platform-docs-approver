@@ -1,0 +1,8 @@
+in: query
+name: org_id
+description: |
+  This param is used to filter records based org id.
+  Supported operators are `in`,`eq`.<br>
+schema:
+  type: string
+  example: 'eq.orvneouegi'
