@@ -1,0 +1,40 @@
+post:
+  tags:
+    - Reports
+  summary: Approve reports
+  description: |
+    It approve expense reports.
+  operationId: PostReportApprovals
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/requests/report_approvals.yaml'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              url:
+                type: string
+                example: '/approver/report_approvals'
+              data:
+                type: array
+                items:
+                  $ref: '../schemas/responses/post/report_approvals.yaml'
+    '401':
+      description: Unauthorised request
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/errors/401.yaml'
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/errors/403.yaml'
