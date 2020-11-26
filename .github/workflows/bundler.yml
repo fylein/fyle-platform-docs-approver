@@ -1,0 +1,40 @@
+# This is a basic workflow to help you get started with Actions
+
+name: bundle openAPI yaml file
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the main branch
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs: 
+  run:
+    name: openapi bundler
+    runs-on: ubuntu-latest
+    steps: 
+    - name: Checkout repo
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+    
+    - name: Install dependencies
+      run: npm install -g @redocly/openapi-cli@0.12.16
+
+    - name: Update source code
+      run: openapi bundle --output approver.yaml apis/main.yaml
+
+    - name: Commit changes
+      uses: EndBug/add-and-commit@v5
+      with:
+        author_name: Jayachandhar
+        author_email: jayachandhar.jr@fyle.in
+        message: "auto generated approver.yaml"
+        add: "approver.yaml"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GIHUB_ACCESS_TOKEN }}
