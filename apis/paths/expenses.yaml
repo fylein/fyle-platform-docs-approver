@@ -1,0 +1,38 @@
+get:
+  tags:
+    - Expenses
+  summary: List expenses
+  operationId: GetExpenses
+  parameters:
+    - $ref: '../schemas/requests/commons/created_at.yaml'
+    - in: query
+      name: invoice_number
+      description: |
+        Supported operators are `eq`, `in`.<br>
+      schema:
+        type: string
+        example: 'CRN4684556772'
+    - in: query
+      name: source_account->type
+      description: |
+        Supported operators are `eq`, `in`.<br>
+        source_account.type=eq.PERSONAL_ACCOUNT
+      schema:
+        type: string
+        example: 'eq.PERSONAL_ACCOUNT'
+    - $ref: '../schemas/requests/commons/order.yaml'
+    - $ref: '../schemas/requests/commons/offset.yaml'
+    - $ref: '../schemas/requests/commons/limit.yaml'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/responses/get/expenses.yaml'
+    '401':
+      description: Unauthorized request
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/errors/401.yaml'

@@ -1,0 +1,13 @@
+type: object
+properties:
+  count:
+    $ref: '../commons/count.yaml'
+  offset:
+    $ref: '../commons/offset.yaml'
+  url:
+    type: string
+    example: '/approver/reports'
+  data:
+    type: array
+    items:
+      $ref: '../../objects/reports.yaml'

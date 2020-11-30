@@ -1,0 +1,22 @@
+type: object
+properties:
+  bus_travel_class:
+    description: |
+      This field is applicable only for bus category.
+    type: string
+    example: 'AC'
+  train_travel_class:
+    description: |
+      This field is applicable for only Train category.
+    type: string
+    example: string
+  flight_journey_travel_class:
+    description: |
+      This field is applicable only for flight category. Can be `BUSINESS`, `ECONOMY`, `FIRST_CLASS`
+    type: string
+    example: 'ECONOMY'
+  flight_return_travel_class:
+    description: |
+      This field is applicable only for flight category. Can be `BUSINESS`, `ECONOMY`, `FIRST_CLASS`
+    type: string
+    example: 'BUSINESS'

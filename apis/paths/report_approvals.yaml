@@ -1,6 +1,6 @@
 post:
   tags:
-    - Reports
+    - Reports Approvals
   summary: Approve reports
   description: |
     It approve expense reports.

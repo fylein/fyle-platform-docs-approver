@@ -1,0 +1,25 @@
+type: object
+properties:
+  distance:
+    type: number
+    description: Actual distance travelled by employee in mileage expenses.
+  calculated_distance:
+    type: number
+    description: Distance compluted by Fyle in mileage expenses.
+  distance_unit:
+    type: string
+    enum:
+      - KM
+      - MILES
+  calculated_amount:
+    type: number
+    description: Amount compluted by Fyle in mileage expenses.
+  vehicle_type:
+    type: string
+    description: Type of vehicle used for travel.
+  rate:
+    type: number
+    description: Rate per km as provided in the Fyle system
+  is_round_trip:
+    type: boolean
+    description: Flag stating whether this was a round trip or not.
