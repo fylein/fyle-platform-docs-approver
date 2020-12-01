@@ -14,7 +14,7 @@ properties:
     type: string
     format: date-time
     description: |
-      RFC 3339, section 5.6 "https://tools.ietf.org/html/rfc3339#section-5.6" compliant timestamp on which the transaction for which the expense [being] fyled was made. <br>
+      RFC 3339, section 5.6 "https://tools.ietf.org/html/rfc3339#section-5.6" compliant timestamp on which the expense [being] fyled was made. <br>
       This date cannot be in future.
     example: '2020-07-21T17:32:28Z'
   source:
@@ -36,28 +36,28 @@ properties:
   amount:
     type: number
     description: |
-      The transaction amount for which the expense was/will-be fyled.
+      The amount for which the expense was/will-be fyled.
       The amount will be in the currency that the organization is setup with in case of GET requests. <br>
       Note that, when used as part of creating an Expense via POST, the actual amount in the Expense, in a subsequent GET call, may get changed either because of policies or admin/approvers changing the amount.
     example: 1500.0
   user_amount:
     type: number
     description: |
-      The transaction amount as claimed by user.
+      The expense amount as claimed by user.
       The amount will be in the currency that the organization is setup with in case of GET requests. <br>
     example: 1984.18
   policy_amount:
     type: number
     readOnly: true
     description: |
-      The transaction amount which is modified by policy.
+      The expense amount which is modified by policy.
       The amount will be in the currency that the organization is setup with in case of GET requests. <br>
     example: 1500.0
   admin_amount:
     type: number
     readOnly: true
     description: |
-      The transaction amount which is modified by admin or approver.
+      The expense amount which is modified by admin or approver.
       The amount will be in the currency that the organization is setup with in case of GET requests. <br>
       This could be null if admin or approver has not edited your expense.
     example: 0
@@ -211,25 +211,58 @@ properties:
       This field is only relevant for travel related categories. This represents the return date.
     type: string
     example: '2019-07-27T00:00:00.000Z'
-  mileage:
-    $ref: 'minimals/mileage.yaml'
-  travel:
-    $ref: 'minimals/travel.yaml'
-  hotel:
-    type: object
-    properties:
-      is_breakfast_provided:
-        type: boolean
+  mileage_distance:
+    type: number
+    description: Actual distance travelled by employee in mileage expenses.
+  mileage_calculated_distance:
+    type: number
+    description: Distance compluted by Fyle in mileage expenses.
+  mileage_distance_unit:
+    type: string
+    enum:
+      - KM
+      - MILES
+  mileage_calculated_amount:
+    type: number
+    description: Amount compluted by Fyle in mileage expenses.
+  mileage_vehicle_type:
+    type: string
+    description: Type of vehicle used for travel.
+  mileage_rate:
+    type: number
+    description: Rate per km as provided in the Fyle system
+  mileage_is_round_trip:
+    type: boolean
+    description: Flag stating whether this was a round trip or not.
+  bus_travel_class:
+    description: |
+      This field is applicable only for bus category.
+    type: string
+    example: 'AC'
+  train_travel_class:
+    description: |
+      This field is applicable for only Train category.
+    type: string
+    example: string
+  flight_journey_travel_class:
+    description: |
+      This field is applicable only for flight category. Can be `BUSINESS`, `ECONOMY`, `FIRST_CLASS`
+    type: string
+    example: 'ECONOMY'
+  flight_return_travel_class:
+    description: |
+      This field is applicable only for flight category. Can be `BUSINESS`, `ECONOMY`, `FIRST_CLASS`
+    type: string
+    example: 'BUSINESS'
+  hotel_is_breakfast_provided:
+    type: boolean
   per_diem_rate_id:
     type: string
   per_diem_rate:
-    allOf:
-      - $ref: 'minimals/perdiem.yaml'
-      - type: object
-        properties:
-          num_days:
-            type: integer
-            example: 2
+    $ref: 'minimals/perdiem.yaml'
+  num_days:
+    type: integer
+    example: 2
   has_attachments:
     type: boolean
     description: |
@@ -311,7 +344,7 @@ properties:
     readOnly: true
     description: |
       This key contains details about corporate card transaction linked to this expense.
-  transaction_approvals:
+  expense_approvals:
     type: array
     readOnly: true
     items:

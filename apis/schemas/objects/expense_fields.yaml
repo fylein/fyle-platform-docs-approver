@@ -1,0 +1,36 @@
+type: object
+properties:
+  id:
+    type: string
+    description: |
+      This id is provided by Fyle to identify a particular expense field.
+    example: ef3ejnl335g
+  created_at:
+    $ref: './commons/created_at.yaml'
+  updated_at:
+    $ref: './commons/updated_at.yaml'
+  seq:
+    type: integer
+    example: 1
+  field_name:
+    $ref: './expense_fields/field_name.yaml'
+  column_name:
+    $ref: './expense_fields/column_name.yaml'
+  title:
+    $ref: './expense_fields/title.yaml'
+  type:
+    $ref: './expense_fields/type.yaml'
+  options:
+    $ref: './expense_fields/options.yaml'
+  default_value:
+    $ref: './expense_fields/default_value.yaml'
+  placeholder:
+    $ref: './expense_fields/placeholder.yaml'
+  category_ids:
+    $ref: './commons/category_ids.yaml'
+  is_enabled:
+    $ref: './commons/enabled.yaml'
+  mandatory:
+    $ref: './expense_fields/mandatory.yaml'
+  org_id:
+    $ref: './commons/org_id.yaml'

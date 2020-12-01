@@ -4,7 +4,7 @@ properties:
     type: string
     maxLength: 255
     description: |
-      This id prodvided by Fyle to uniquely identify a Expense report.
+      This id provided by Fyle to uniquely identify a Expense report.
       This id is always prefixed with `rp`.
     readOnly: true
     example: 'rpevetgn3kl'

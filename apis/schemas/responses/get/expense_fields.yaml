@@ -1,0 +1,15 @@
+type: object
+properties:
+  count:
+    $ref: '../commons/count.yaml'
+  offset:
+    $ref: '../commons/offset.yaml'
+  limit:
+    $ref: '../commons/limit.yaml'
+  url:
+    type: string
+    example: '/approver/expense_fields'
+  data:
+    type: array
+    items:
+      $ref: '../../objects/expense_fields.yaml'
