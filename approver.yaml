@@ -65,7 +65,7 @@ components:
       type: string
       maxLength: 255
       description: >
-        This id prodvided by Fyle to uniquely identify an employee within an
+        This id provided by Fyle to uniquely identify an employee within an
         organization.
 
         This id is always prefixed with `ou`.
@@ -242,7 +242,7 @@ components:
           type: string
           maxLength: 255
           description: |
-            This id prodvided by Fyle to uniquely identify a Expense report.
+            This id provided by Fyle to uniquely identify a Expense report.
             This id is always prefixed with `rp`.
           readOnly: true
           example: rpevetgn3kl
@@ -593,57 +593,6 @@ components:
         trip_request_id:
           type: string
           description: An ID of the TripRequest associated with it
-    mileage:
-      type: object
-      properties:
-        distance:
-          type: number
-          description: Actual distance travelled by employee in mileage expenses.
-        calculated_distance:
-          type: number
-          description: Distance compluted by Fyle in mileage expenses.
-        distance_unit:
-          type: string
-          enum:
-            - KM
-            - MILES
-        calculated_amount:
-          type: number
-          description: Amount compluted by Fyle in mileage expenses.
-        vehicle_type:
-          type: string
-          description: Type of vehicle used for travel.
-        rate:
-          type: number
-          description: Rate per km as provided in the Fyle system
-        is_round_trip:
-          type: boolean
-          description: Flag stating whether this was a round trip or not.
-    travel:
-      type: object
-      properties:
-        bus_travel_class:
-          description: |
-            This field is applicable only for bus category.
-          type: string
-          example: AC
-        train_travel_class:
-          description: |
-            This field is applicable for only Train category.
-          type: string
-          example: string
-        flight_journey_travel_class:
-          description: >
-            This field is applicable only for flight category. Can be
-            `BUSINESS`, `ECONOMY`, `FIRST_CLASS`
-          type: string
-          example: ECONOMY
-        flight_return_travel_class:
-          description: >
-            This field is applicable only for flight category. Can be
-            `BUSINESS`, `ECONOMY`, `FIRST_CLASS`
-          type: string
-          example: BUSINESS
     perdiem:
       type: object
       readOnly: true
@@ -755,8 +704,7 @@ components:
           description: >
             RFC 3339, section 5.6
             "https://tools.ietf.org/html/rfc3339#section-5.6" compliant
-            timestamp on which the transaction for which the expense [being]
-            fyled was made. <br>
+            timestamp on which the expense [being] fyled was made. <br>
 
             This date cannot be in future.
           example: '2020-07-21T17:32:28Z'
@@ -788,7 +736,7 @@ components:
         amount:
           type: number
           description: >
-            The transaction amount for which the expense was/will-be fyled.
+            The amount for which the expense was/will-be fyled.
 
             The amount will be in the currency that the organization is setup
             with in case of GET requests. <br>
@@ -801,7 +749,7 @@ components:
         user_amount:
           type: number
           description: >
-            The transaction amount as claimed by user.
+            The expense amount as claimed by user.
 
             The amount will be in the currency that the organization is setup
             with in case of GET requests. <br>
@@ -810,7 +758,7 @@ components:
           type: number
           readOnly: true
           description: >
-            The transaction amount which is modified by policy.
+            The expense amount which is modified by policy.
 
             The amount will be in the currency that the organization is setup
             with in case of GET requests. <br>
@@ -819,7 +767,7 @@ components:
           type: number
           readOnly: true
           description: >
-            The transaction amount which is modified by admin or approver.
+            The expense amount which is modified by admin or approver.
 
             The amount will be in the currency that the organization is setup
             with in case of GET requests. <br>
@@ -994,25 +942,60 @@ components:
             represents the return date.
           type: string
           example: '2019-07-27T00:00:00.000Z'
-        mileage:
-          $ref: '#/components/schemas/mileage'
-        travel:
-          $ref: '#/components/schemas/travel'
-        hotel:
-          type: object
-          properties:
-            is_breakfast_provided:
-              type: boolean
+        mileage_distance:
+          type: number
+          description: Actual distance travelled by employee in mileage expenses.
+        mileage_calculated_distance:
+          type: number
+          description: Distance compluted by Fyle in mileage expenses.
+        mileage_distance_unit:
+          type: string
+          enum:
+            - KM
+            - MILES
+        mileage_calculated_amount:
+          type: number
+          description: Amount compluted by Fyle in mileage expenses.
+        mileage_vehicle_type:
+          type: string
+          description: Type of vehicle used for travel.
+        mileage_rate:
+          type: number
+          description: Rate per km as provided in the Fyle system
+        mileage_is_round_trip:
+          type: boolean
+          description: Flag stating whether this was a round trip or not.
+        bus_travel_class:
+          description: |
+            This field is applicable only for bus category.
+          type: string
+          example: AC
+        train_travel_class:
+          description: |
+            This field is applicable for only Train category.
+          type: string
+          example: string
+        flight_journey_travel_class:
+          description: >
+            This field is applicable only for flight category. Can be
+            `BUSINESS`, `ECONOMY`, `FIRST_CLASS`
+          type: string
+          example: ECONOMY
+        flight_return_travel_class:
+          description: >
+            This field is applicable only for flight category. Can be
+            `BUSINESS`, `ECONOMY`, `FIRST_CLASS`
+          type: string
+          example: BUSINESS
+        hotel_is_breakfast_provided:
+          type: boolean
         per_diem_rate_id:
           type: string
         per_diem_rate:
-          allOf:
-            - $ref: '#/components/schemas/perdiem'
-            - type: object
-              properties:
-                num_days:
-                  type: integer
-                  example: 2
+          $ref: '#/components/schemas/perdiem'
+        num_days:
+          type: integer
+          example: 2
         has_attachments:
           type: boolean
           description: >
@@ -1102,7 +1085,7 @@ components:
           description: >
             This key contains details about corporate card transaction linked to
             this expense.
-        transaction_approvals:
+        expense_approvals:
           type: array
           readOnly: true
           items:
@@ -1157,6 +1140,119 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/reports'
+    field_name:
+      type: string
+      description: |
+        This specifies the name of the expense field.
+      example: Vendor desciption
+    column_name:
+      type: string
+      description: |
+        This specifies the name of column to which this expense field mapped to.
+      readOnly: true
+      example: text_column1
+    title:
+      type: string
+      description: |
+        This specifies the title of the expense field.
+      example: Vendor desciption
+    type:
+      type: string
+      description: |
+        This field specifies the type of the expense field.
+      example: TEXT
+    options:
+      type: array
+      items:
+        type: string
+      description: >
+        This specifies the option values of the expense field in case on SELECT
+        or MULTI_SELECT type.
+      example:
+        - Chai
+        - Coffee
+    default_value:
+      type: string
+      description: |
+        This specifies the default value of the expense fields.
+      example: Coffee
+    placeholder:
+      type: string
+      description: |
+        This specifies the placeholder of the expense field.
+      example: Enter vendor
+    category_ids:
+      type: array
+      items:
+        type: integer
+      description: >
+        This field specifies the org category ids associated with the custom
+        property.
+      example:
+        - 16570
+    enabled:
+      type: boolean
+      description: |
+        This field specifies if the object is enabled or not.
+      example: true
+    mandatory:
+      type: boolean
+      description: |
+        This specifies if the expense field is mandatory or not.
+      example: true
+    expense_fields:
+      type: object
+      properties:
+        id:
+          type: string
+          description: |
+            This id is provided by Fyle to identify a particular expense field.
+          example: ef3ejnl335g
+        created_at:
+          $ref: '#/components/schemas/created_at'
+        updated_at:
+          $ref: '#/components/schemas/updated_at'
+        seq:
+          type: integer
+          example: 1
+        field_name:
+          $ref: '#/components/schemas/field_name'
+        column_name:
+          $ref: '#/components/schemas/column_name'
+        title:
+          $ref: '#/components/schemas/title'
+        type:
+          $ref: '#/components/schemas/type'
+        options:
+          $ref: '#/components/schemas/options'
+        default_value:
+          $ref: '#/components/schemas/default_value'
+        placeholder:
+          $ref: '#/components/schemas/placeholder'
+        category_ids:
+          $ref: '#/components/schemas/category_ids'
+        is_enabled:
+          $ref: '#/components/schemas/enabled'
+        mandatory:
+          $ref: '#/components/schemas/mandatory'
+        org_id:
+          $ref: '#/components/schemas/org_id'
+    get_expense_fields:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/count'
+        offset:
+          $ref: '#/components/schemas/offset'
+        limit:
+          $ref: '#/components/schemas/limit'
+        url:
+          type: string
+          example: /approver/expense_fields
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/expense_fields'
   parameters:
     created_at:
       in: query
@@ -1285,10 +1381,22 @@ components:
         type: string
         example: >-
           reimbursed_at=gte.2020-06-01T00:00:00.000Z&reimbursed_at=lt.2020-07-01T00:00:00.000Z
+    is_enabled:
+      in: query
+      name: is_enabled
+      description: |
+        This param is used to filer records by
+        Supported operators are `eq`.<br>
+      schema:
+        type: string
+        example: eq.true
 tags:
   - name: Expenses
     description: |
       This API gives you access to Expenses data which are reported to you.
+  - name: Expense Fields
+    description: |
+      This API gives you access to your organisation's Expense Fields data.
   - name: Reports
     description: >
       These API gives you access to Expense Reports data which are submitted to
@@ -1409,6 +1517,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/get_reports'
+        '401':
+          description: Unauthorised request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401'
+  /approver/expense_fields:
+    get:
+      tags:
+        - Expense Fields
+      summary: List expense fields
+      description: |
+        Gives the list of all expense fields based on query parameters.
+      operationId: get-expense-fields
+      parameters:
+        - $ref: '#/components/parameters/created_at'
+        - $ref: '#/components/parameters/updated_at'
+        - $ref: '#/components/parameters/is_enabled'
+        - $ref: '#/components/parameters/order'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_expense_fields'
         '401':
           description: Unauthorised request
           content:
