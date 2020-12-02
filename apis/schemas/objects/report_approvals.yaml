@@ -1,0 +1,29 @@
+type: object
+properties:
+  report_id:
+    $ref: './commons/report_id.yaml'
+  created_at:
+    $ref: './commons/created_at.yaml'
+  updated_at:
+    $ref: './commons/updated_at.yaml'
+  approver_id:
+    allOf:
+      - $ref: './commons/employee_id.yaml'
+  state:
+    type: string
+    enum:
+      - APPROVAL_PENDING
+      - APPROVAL_DONE
+      - APPROVAL_DISABLED
+    readOnly: true
+  last_updater_id:
+    type: string
+    readOnly: true
+    description: |
+      This represents the id of employee who updated this expense.
+    example: "ouGgsdfdq"
+  last_updater:
+    allOf:
+      - $ref: 'minimals/employee.yaml'
+    description: |
+      Details of employee who updated this expense.

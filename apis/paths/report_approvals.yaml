@@ -23,9 +23,7 @@ post:
                 type: string
                 example: '/approver/report_approvals'
               data:
-                type: array
-                items:
-                  $ref: '../schemas/responses/post/report_approvals.yaml'
+                $ref: '../schemas/responses/post/report_approvals.yaml'
     '401':
       description: Unauthorised request
       content:
