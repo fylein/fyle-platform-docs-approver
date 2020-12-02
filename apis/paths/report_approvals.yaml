@@ -4,7 +4,7 @@ post:
   summary: Approve reports
   description: |
     It approve expense reports.
-  operationId: PostReportApprovals
+  operationId: post-report-approvals
   requestBody:
     required: true
     content:
@@ -23,7 +23,7 @@ post:
                 type: string
                 example: '/approver/report_approvals'
               data:
-                $ref: '../schemas/responses/post/report_approvals.yaml'
+                $ref: '../schemas/objects/report_approvals.yaml'
     '401':
       description: Unauthorised request
       content:
