@@ -203,16 +203,6 @@ components:
             - $ref: '#/components/schemas/employee'
           description: |
             Details of employee who updated this expense.
-    post_report_approvals:
-      type: object
-      properties:
-        url:
-          type: string
-          example: /approver/report_approvals
-        data:
-          $ref: '#/components/schemas/objects_report_approvals'
-      required:
-        - data
     count:
       description: |
         The total number of objects that can be requested.
@@ -1447,7 +1437,7 @@ paths:
       summary: Approve reports
       description: |
         It approve expense reports.
-      operationId: PostReportApprovals
+      operationId: post-report-approvals
       requestBody:
         required: true
         content:
@@ -1466,7 +1456,7 @@ paths:
                     type: string
                     example: /approver/report_approvals
                   data:
-                    $ref: '#/components/schemas/post_report_approvals'
+                    $ref: '#/components/schemas/objects_report_approvals'
         '401':
           description: Unauthorised request
           content:
