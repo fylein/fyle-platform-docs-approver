@@ -45,15 +45,13 @@ components:
       type: object
       properties:
         data:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: |
-                  Id of a report which is to be approved.   
-                example: rphs782hj245
+          type: object
+          properties:
+            id:
+              type: string
+              description: |
+                Id of a report which is to be approved.
+              example: rphs782hj245
       required:
         - data
     report_id:
