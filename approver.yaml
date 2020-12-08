@@ -18,6 +18,143 @@ components:
           tokenUrl: 'https://accounts.fylehq.com/oauth/token'
           scopes:
             approver.*: Grant all Approver actions
+  parameters:
+    state:
+      in: query
+      name: state
+      description: >
+        Accepted states are DRAFT, APPROVER_INQUIRY, APPROVER_PENDING, APPROVED,
+        PAYMENT_PENDING, PAYMENT_PROCESSING, PAID.<br>
+
+        Supported operators are `eq`, `like`, `in`.<br>
+      schema:
+        type: string
+        example: in.(COMPLETE)
+    order:
+      in: query
+      name: order
+      description: |
+        use comma separated column names for sorting the results.
+        For sorting in descending order, use `column_name.desc`
+      schema:
+        type: string
+        example: 'updated_at.desc,id'
+        default: 'updated_at.desc,id'
+    offset:
+      in: query
+      name: offest
+      description: |
+        offset is used to skip that many number of objects before counting. <br>
+      schema:
+        type: integer
+        example: 10
+    limit:
+      in: query
+      name: limit
+      description: >
+        A limit on the number of objects to be returned. Allowed values are from
+        1 to 200.
+      schema:
+        type: integer
+        example: 100
+        default: 200
+    created_at:
+      in: query
+      name: created_at
+      description: >
+        Date string in yyyy-MM-ddTHH:mm:ss.SSSZ format along with operator in
+        RHS dot pattern.<br>
+
+        Supported operators are `gte`,`lte`,`gt`,`lt`.<br>
+
+        created_at=gte.2020-06-01T00:00:00.000Z filters all employees created on
+        or after 1st Jun 2020.<br>
+
+        created_at=gte.2020-06-01T00:00:00.000Z&created_at=lt.2020-07-01T00:00:00.000Z
+        filters all employees `created` in the month of Jun 2020.<br>
+      schema:
+        type: string
+        example: 'gte.2020-06-01T00:00:00.000Z'
+    updated_at:
+      in: query
+      name: updated_at
+      description: >
+        Date string in yyyy-MM-ddTHH:mm:ss.SSSZ format along with operator in
+        RHS dot pattern.<br>
+
+        Supported operators are `gte`,`lte`,`gt`,`lt`.<br>
+
+        updated_at=gte.2020-06-01T00:00:00.000Z filters all employees updated on
+        or after 1st Jun 2020.<br>
+
+        updated_at=gte.2020-06-01T00:00:00.000Z&updated_at=lt.2020-07-01T00:00:00.000Z
+        filters all employees `updated` in the month of Jun 2020.<br>
+      schema:
+        type: string
+        example: 'gte.2020-06-01T00:00:00.000Z'
+    approved_at:
+      in: query
+      name: approved_at
+      description: >
+        Date string in yyyy-MM-ddTHH:mm:ss.SSSZ format along with operator in
+        RHS dot pattern.<br>
+
+        Supported operators are `gte`,`lte`,`gt`,`lt`.<br>
+
+        approved_at=gte.2020-06-01T00:00:00.000Z filters all objects approved on
+        or after 1st Jun 2020.<br>
+
+        approved_at=gte.2020-06-01T00:00:00.000Z&approved_at=lt.2020-07-01T00:00:00.000Z
+        filters all objects `approved` in the month of Jun 2020.<br>
+      schema:
+        type: string
+        example: >-
+          approved_at=gte.2020-06-01T00:00:00.000Z&approved_at=lt.2020-07-01T00:00:00.000Z
+    settled_at:
+      in: query
+      name: settled_at
+      description: >
+        Date string in yyyy-MM-ddTHH:mm:ss.SSSZ format along with operator in
+        RHS dot pattern.<br>
+
+        Supported operators are `gte`,`lte`,`gt`,`lt`.<br>
+
+        settled_at=gte.2020-06-01T00:00:00.000Z filters all reports settled on
+        or after 1st Jun 2020.<br>
+
+        settled_at=gte.2020-06-01T00:00:00.000Z&settled_at=lt.2020-07-01T00:00:00.000Z
+        filters all reports settled in the month of Jun 2020.<br>
+      schema:
+        type: string
+        example: >-
+          settled_at=gte.2020-06-01T00:00:00.000Z&settled_at=lt.2020-07-01T00:00:00.000Z
+    reimbursed_at:
+      in: query
+      name: reimbursed_at
+      description: >
+        Date string in yyyy-MM-ddTHH:mm:ss.SSSZ format along with operator in
+        RHS dot pattern.<br>
+
+        Supported operators are `gte`,`lte`,`gt`,`lt`.<br>
+
+        reimbursed_at=gte.2020-06-01T00:00:00.000Z filters all reports
+        reimbursed on or after 1st Jun 2020.<br>
+
+        reimbursed_at=gte.2020-06-01T00:00:00.000Z&reimbursed_at=lt.2020-07-01T00:00:00.000Z
+        filters all reports reimbursed in the month of Jun 2020.<br>
+      schema:
+        type: string
+        example: >-
+          reimbursed_at=gte.2020-06-01T00:00:00.000Z&reimbursed_at=lt.2020-07-01T00:00:00.000Z
+    is_enabled:
+      in: query
+      name: is_enabled
+      description: |
+        This param is used to filer records by
+        Supported operators are `eq`.<br>
+      schema:
+        type: string
+        example: eq.true
   schemas:
     '401':
       type: object
@@ -41,19 +178,30 @@ components:
           description: >
             This error means current user does not have enough permissions to
             perform this operation.
-    report_approvals:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: |
-                Id of a report which is to be approved.
-              example: rphs782hj245
-      required:
-        - data
+    count:
+      description: |
+        The total number of objects that can be requested.
+      type: integer
+      example: 10000
+    offset:
+      description: >
+        offset is used to skip that many number of objects before counting. <br>
+
+        For example, if there are 2000 objects, <br>
+
+        The first request will have offset as 0 and limit as 1000 to return
+        first 1000 objects. <br>
+
+        The second request will have offset as 1000 and limit as 1000 to return
+        next 1000 objects. <br>
+      type: integer
+      example: 10
+      default: 200
+    limit:
+      description: |
+        The actual number of objects that are returned in the response.
+      type: integer
+      example: 100
     report_id:
       type: string
       maxLength: 255
@@ -171,7 +319,7 @@ components:
           description: >-
             Represents the full name of the employee. Must be at least 3
             characters.
-    objects_report_approvals:
+    report_approvals:
       type: object
       properties:
         report_id:
@@ -190,6 +338,7 @@ components:
             - APPROVAL_DONE
             - APPROVAL_DISABLED
           readOnly: true
+          example: APPROVAL_PENDING
         last_updater_id:
           type: string
           readOnly: true
@@ -201,30 +350,43 @@ components:
             - $ref: '#/components/schemas/employee'
           description: |
             Details of employee who updated this expense.
-    count:
-      description: |
-        The total number of objects that can be requested.
-      type: integer
-      example: 10000
-    offset:
-      description: >
-        offset is used to skip that many number of objects before counting. <br>
-
-        For example, if there are 2000 objects, <br>
-
-        The first request will have offset as 0 and limit as 1000 to return
-        first 1000 objects. <br>
-
-        The second request will have offset as 1000 and limit as 1000 to return
-        next 1000 objects. <br>
-      type: integer
-      example: 10
-      default: 200
-    limit:
-      description: |
-        The actual number of objects that are returned in the response.
-      type: integer
-      example: 100
+    get_report_approvals:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/count'
+        offset:
+          $ref: '#/components/schemas/offset'
+        limit:
+          $ref: '#/components/schemas/limit'
+        url:
+          type: string
+          example: /approver/report_approvals
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/report_approvals'
+    requests_report_approvals:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: |
+                Id of a report which is to be approved.
+              example: rphs782hj245
+      required:
+        - data
+    post_report_approvals:
+      type: object
+      properties:
+        url:
+          type: string
+          example: /approver/report_approvals
+        data:
+          $ref: '#/components/schemas/report_approvals'
     foreign_currency:
       type: string
       description: >
@@ -1038,6 +1200,7 @@ components:
           readOnly: true
         purpose:
           type: string
+          example: Spent on lunch
         claim_number:
           type: string
           maxLength: 255
@@ -1049,8 +1212,10 @@ components:
           type: number
         state:
           type: string
+          example: APPROVAL_PENDING
         source:
           type: string
+          example: SLACK_APP
         approved_at:
           type: string
           format: date-time
@@ -1107,6 +1272,7 @@ components:
           type: array
           items:
             type: string
+            example: txg3053jg33
         verification_state:
           type: string
         creator_id:
@@ -1162,6 +1328,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/reports'
+    'reports@{id}':
+      type: object
+      properties:
+        url:
+          type: string
+          example: /approver/reports/rpevetgn3kl
+        data:
+          $ref: '#/components/schemas/reports'
     field_name:
       type: string
       description: |
@@ -1275,143 +1449,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/expense_fields'
-  parameters:
-    created_at:
-      in: query
-      name: created_at
-      description: >
-        Date string in yyyy-MM-ddTHH:mm:ss.SSSZ format along with operator in
-        RHS dot pattern.<br>
-
-        Supported operators are `gte`,`lte`,`gt`,`lt`.<br>
-
-        created_at=gte.2020-06-01T00:00:00.000Z filters all employees created on
-        or after 1st Jun 2020.<br>
-
-        created_at=gte.2020-06-01T00:00:00.000Z&created_at=lt.2020-07-01T00:00:00.000Z
-        filters all employees `created` in the month of Jun 2020.<br>
-      schema:
-        type: string
-        example: 'gte.2020-06-01T00:00:00.000Z'
-    order:
-      in: query
-      name: order
-      description: |
-        use comma separated column names for sorting the results.
-        For sorting in descending order, use `column_name.desc`
-      schema:
-        type: string
-        example: 'updated_at.desc,id'
-        default: 'updated_at.desc,id'
-    offset:
-      in: query
-      name: offest
-      description: |
-        offset is used to skip that many number of objects before counting. <br>
-      schema:
-        type: integer
-        example: 10
-    limit:
-      in: query
-      name: limit
-      description: >
-        A limit on the number of objects to be returned. Allowed values are from
-        1 to 200.
-      schema:
-        type: integer
-        example: 100
-        default: 200
-    updated_at:
-      in: query
-      name: updated_at
-      description: >
-        Date string in yyyy-MM-ddTHH:mm:ss.SSSZ format along with operator in
-        RHS dot pattern.<br>
-
-        Supported operators are `gte`,`lte`,`gt`,`lt`.<br>
-
-        updated_at=gte.2020-06-01T00:00:00.000Z filters all employees updated on
-        or after 1st Jun 2020.<br>
-
-        updated_at=gte.2020-06-01T00:00:00.000Z&updated_at=lt.2020-07-01T00:00:00.000Z
-        filters all employees `updated` in the month of Jun 2020.<br>
-      schema:
-        type: string
-        example: 'gte.2020-06-01T00:00:00.000Z'
-    approved_at:
-      in: query
-      name: approved_at
-      description: >
-        Date string in yyyy-MM-ddTHH:mm:ss.SSSZ format along with operator in
-        RHS dot pattern.<br>
-
-        Supported operators are `gte`,`lte`,`gt`,`lt`.<br>
-
-        approved_at=gte.2020-06-01T00:00:00.000Z filters all objects approved on
-        or after 1st Jun 2020.<br>
-
-        approved_at=gte.2020-06-01T00:00:00.000Z&approved_at=lt.2020-07-01T00:00:00.000Z
-        filters all objects `approved` in the month of Jun 2020.<br>
-      schema:
-        type: string
-        example: >-
-          approved_at=gte.2020-06-01T00:00:00.000Z&approved_at=lt.2020-07-01T00:00:00.000Z
-    state:
-      in: query
-      name: state
-      description: >
-        Accepted states are DRAFT, APPROVER_INQUIRY, APPROVER_PENDING, APPROVED,
-        PAYMENT_PENDING, PAYMENT_PROCESSING, PAID.<br>
-
-        Supported operators are `eq`, `like`, `in`.<br>
-      schema:
-        type: string
-        example: in.(COMPLETE)
-    settled_at:
-      in: query
-      name: settled_at
-      description: >
-        Date string in yyyy-MM-ddTHH:mm:ss.SSSZ format along with operator in
-        RHS dot pattern.<br>
-
-        Supported operators are `gte`,`lte`,`gt`,`lt`.<br>
-
-        settled_at=gte.2020-06-01T00:00:00.000Z filters all reports settled on
-        or after 1st Jun 2020.<br>
-
-        settled_at=gte.2020-06-01T00:00:00.000Z&settled_at=lt.2020-07-01T00:00:00.000Z
-        filters all reports settled in the month of Jun 2020.<br>
-      schema:
-        type: string
-        example: >-
-          settled_at=gte.2020-06-01T00:00:00.000Z&settled_at=lt.2020-07-01T00:00:00.000Z
-    reimbursed_at:
-      in: query
-      name: reimbursed_at
-      description: >
-        Date string in yyyy-MM-ddTHH:mm:ss.SSSZ format along with operator in
-        RHS dot pattern.<br>
-
-        Supported operators are `gte`,`lte`,`gt`,`lt`.<br>
-
-        reimbursed_at=gte.2020-06-01T00:00:00.000Z filters all reports
-        reimbursed on or after 1st Jun 2020.<br>
-
-        reimbursed_at=gte.2020-06-01T00:00:00.000Z&reimbursed_at=lt.2020-07-01T00:00:00.000Z
-        filters all reports reimbursed in the month of Jun 2020.<br>
-      schema:
-        type: string
-        example: >-
-          reimbursed_at=gte.2020-06-01T00:00:00.000Z&reimbursed_at=lt.2020-07-01T00:00:00.000Z
-    is_enabled:
-      in: query
-      name: is_enabled
-      description: |
-        This param is used to filer records by
-        Supported operators are `eq`.<br>
-      schema:
-        type: string
-        example: eq.true
 tags:
   - name: Expenses
     description: |
@@ -1434,27 +1471,21 @@ paths:
         - Reports Approvals
       summary: Approve reports
       description: |
-        It approve expense reports.
+        It approves expense reports.
       operationId: post-report-approvals
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/report_approvals'
+              $ref: '#/components/schemas/requests_report_approvals'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  url:
-                    type: string
-                    example: /approver/report_approvals
-                  data:
-                    $ref: '#/components/schemas/objects_report_approvals'
+                $ref: '#/components/schemas/post_report_approvals'
         '401':
           description: Unauthorised request
           content:
@@ -1467,6 +1498,39 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/403'
+    get:
+      tags:
+        - Reports Approvals
+      summary: List Report Approvals
+      operationId: GetReportApprovals
+      parameters:
+        - in: query
+          name: report_id
+          description: >
+            Filters the objects by report id. For single value use
+            `report_id=eq.<value>`.
+
+            For multiple values, use `report_id=in.(value1,value2,value3)`.
+          schema:
+            type: string
+            example: eq.rptqwds24
+        - $ref: '#/components/parameters/state'
+        - $ref: '#/components/parameters/order'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_report_approvals'
+        '401':
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401'
   /approver/expenses:
     get:
       tags:
@@ -1537,6 +1601,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/get_reports'
+        '401':
+          description: Unauthorised request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401'
+  '/approver/reports/{id}':
+    get:
+      tags:
+        - Reports
+      summary: Retrieve a report
+      operationId: Getreport
+      parameters:
+        - $ref: '#/components/parameters/created_at'
+        - $ref: '#/components/parameters/updated_at'
+        - $ref: '#/components/parameters/approved_at'
+        - $ref: '#/components/parameters/state'
+        - $ref: '#/components/parameters/settled_at'
+        - $ref: '#/components/parameters/reimbursed_at'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/limit'
+        - in: query
+          name: order
+          description: |
+            use comma separated column names for sorting the results. <br>
+            For sorting in descending order, use `updated_at.desc`.<br>
+            Supported columns are `updated_at`, `id`.
+          schema:
+            type: string
+            example: 'updated_at.desc,id'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reports@{id}'
         '401':
           description: Unauthorised request
           content:
