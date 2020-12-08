@@ -33,7 +33,7 @@ post:
 get:
   tags:
     - Reports Approvals
-  summary: List Report Approvals
+  summary: List report approvals
   operationId: GetReportApprovals
   parameters:
     - in: query
