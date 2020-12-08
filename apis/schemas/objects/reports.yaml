@@ -25,6 +25,7 @@ properties:
     readOnly: true
   purpose:
     type: string
+    example: "Spent on lunch"
   claim_number:
     type: string
     maxLength: 255
@@ -36,8 +37,10 @@ properties:
     type: number
   state:
     type: string
+    example: APPROVAL_PENDING
   source:
     type: string
+    example: SLACK_APP
   approved_at:
     type: string
     format: date-time
@@ -81,6 +84,7 @@ properties:
     type: array
     items:
       type: string
+      example: "txg3053jg33"
   verification_state:
     type: string
   creator_id:

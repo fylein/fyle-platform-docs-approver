@@ -41,5 +41,7 @@ paths:
     $ref: 'paths/expenses.yaml'
   /approver/reports:
     $ref: 'paths/reports.yaml'
+  /approver/reports/{id}:
+    $ref: 'paths/reports@{id}.yaml'
   /approver/expense_fields:
     $ref: 'paths/expense_fields.yaml'

@@ -16,6 +16,7 @@ properties:
       - APPROVAL_DONE
       - APPROVAL_DISABLED
     readOnly: true
+    example: APPROVAL_PENDING
   last_updater_id:
     type: string
     readOnly: true

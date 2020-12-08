@@ -3,7 +3,7 @@ post:
     - Reports Approvals
   summary: Approve reports
   description: |
-    It approve expense reports.
+    It approves expense reports.
   operationId: post-report-approvals
   requestBody:
     required: true
@@ -17,13 +17,7 @@ post:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              url:
-                type: string
-                example: '/approver/report_approvals'
-              data:
-                $ref: '../schemas/objects/report_approvals.yaml'
+            $ref: '../schemas/responses/post/report_approvals.yaml'
     '401':
       description: Unauthorised request
       content:
@@ -36,3 +30,34 @@ post:
         application/json:
           schema:
             $ref: '../schemas/errors/403.yaml'
+get:
+  tags:
+    - Reports Approvals
+  summary: List Report Approvals
+  operationId: GetReportApprovals
+  parameters:
+    - in: query
+      name: report_id
+      description: |
+        Filters the objects by report id. For single value use `report_id=eq.<value>`.
+        For multiple values, use `report_id=in.(value1,value2,value3)`.
+      schema:
+        type: string
+        example: 'eq.rptqwds24'
+    - $ref: '../schemas/requests/reports/state.yaml'
+    - $ref: '../schemas/requests/commons/order.yaml'
+    - $ref: '../schemas/requests/commons/offset.yaml'
+    - $ref: '../schemas/requests/commons/limit.yaml'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/responses/get/report_approvals.yaml'
+    '401':
+      description: Unauthorized request
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/errors/401.yaml'
